@@ -3,7 +3,7 @@
 ## Dependencies
 
 * Google Container Builder
-* [Remote Builder Container](https://github.com/rphillips/cloud-builders-community/tree/k8s_builds/remote-builder)
+* Fork of [Remote Builder Container](https://github.com/rphillips/cloud-builders-community/tree/k8s_builds/remote-builder)
 
 ## Design
 

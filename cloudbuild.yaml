@@ -1,0 +1,24 @@
+steps:
+- name: gcr.io/rphillips-dev/remote-builder:v0.3.1
+  waitFor: ["-"]
+  env:
+    - INSTANCE_ARGS=--image-project debian-cloud --image-family debian-9
+    - USERNAME=core
+    - PROVISION=sudo /home/core/workspace/provision.sh core
+    - COMMAND=/home/core/workspace/run.sh
+- name: gcr.io/cloud-builders/docker
+  args: ['load', '--input', 'workspace/debian-base-amd64.tar.gz']
+- name: gcr.io/cloud-builders/docker
+  args: ['load', '--input', 'workspace/debian-base-arm.tar.gz']
+- name: gcr.io/cloud-builders/docker
+  args: ['load', '--input', 'workspace/debian-base-arm64.tar.gz']
+- name: gcr.io/cloud-builders/docker
+  args: ['load', '--input', 'workspace/debian-base-ppc64le.tar.gz']
+- name: gcr.io/cloud-builders/docker
+  args: ['load', '--input', 'workspace/debian-base-s390x.tar.gz']
+images:
+- gcr.io/rphillips-dev/debian-base-amd64
+- gcr.io/rphillips-dev/debian-base-arm
+- gcr.io/rphillips-dev/debian-base-arm64
+- gcr.io/rphillips-dev/debian-base-ppc64le
+- gcr.io/rphillips-dev/debian-base-s390x

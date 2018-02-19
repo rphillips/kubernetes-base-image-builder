@@ -2,3 +2,5 @@ runtime: go
 env: flex
 env_variables: 
   GITHUB_AUTH_TOKEN: "-your-auth-token-here-"
+manual_scaling:
+  instances: 1

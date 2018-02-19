@@ -2,7 +2,7 @@
 api_version: go1
 cron: 
   description: "create remote tag to trigger build"
-  schedule: "every monday 02:00"
+  schedule: every 2 hours
   url: /hook/rphillips/kubernetes-base-image-builder
 env_variables: 
   GITHUB_AUTH_TOKEN: "-your-auth-token-here-"

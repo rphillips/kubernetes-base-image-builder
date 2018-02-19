@@ -5,18 +5,16 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/google/go-github/github"
 	"github.com/julienschmidt/httprouter"
 	"golang.org/x/oauth2"
-	"google.golang.org/appengine/log"
 )
 
 func main() {
 	router := httprouter.New()
-	router.GET("/hook/*project", handler)
+	router.GET("/hook/:user/:repo", handler)
 	http.ListenAndServe(":8080", router)
 }
 
@@ -51,8 +49,14 @@ func tagRepo(ctx context.Context, user string, repo string) error {
 }
 
 func handler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	project := ps.ByName("project")
-	if project == "" {
+	user := ps.ByName("user")
+	if user == "" {
+		http.NotFound(w, r)
+		return
+	}
+
+	repo := ps.ByName("repo")
+	if repo == "" {
 		http.NotFound(w, r)
 		return
 	}
@@ -60,21 +64,9 @@ func handler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	// setup context
 	ctx := context.Background()
 
-	log.Infof(ctx, "tagging %v", project)
-
-	// get user/project name
-	userRepo := strings.Split(project, "/")
-	if len(userRepo) != 2 {
-		err := fmt.Errorf("Project invalid format: %v", project)
-		log.Errorf(ctx, err.Error())
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	err := tagRepo(ctx, userRepo[0], userRepo[1])
+	err := tagRepo(ctx, user, repo)
 	if err != nil {
-		log.Errorf(ctx, "Error: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

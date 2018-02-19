@@ -49,6 +49,14 @@ func tagRepo(ctx context.Context, user string, repo string) error {
 }
 
 func handler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+
+	if disableCron := os.Getenv("DISABLE_CRON"); disableCron != "true" {
+		if cron := r.Header.Get("X-Appengine-Cron"); cron == "" {
+			http.NotFound(w, r)
+			return
+		}
+	}
+
 	user := ps.ByName("user")
 	if user == "" {
 		http.NotFound(w, r)

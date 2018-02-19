@@ -4,8 +4,8 @@ steps:
   env:
     - INSTANCE_ARGS=--image-project debian-cloud --image-family debian-9
     - USERNAME=core
-    - PROVISION=sudo /home/core/workspace/provision.sh core
-    - COMMAND=/home/core/workspace/run.sh
+    - PROVISION=sudo /home/core/workspace/cloudbuilder/provision.sh core
+    - COMMAND=/home/core/workspace/cloudbuilder/run.sh
 - name: gcr.io/cloud-builders/docker
   args: ['load', '--input', 'workspace/debian-base-amd64.tar.gz']
 - name: gcr.io/cloud-builders/docker

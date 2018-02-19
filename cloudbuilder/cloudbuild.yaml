@@ -22,3 +22,4 @@ images:
 - gcr.io/rphillips-dev/debian-base-arm64
 - gcr.io/rphillips-dev/debian-base-ppc64le
 - gcr.io/rphillips-dev/debian-base-s390x
+timeout: 3600s

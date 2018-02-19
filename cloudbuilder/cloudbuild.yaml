@@ -7,15 +7,15 @@ steps:
     - PROVISION=sudo /home/core/workspace/cloudbuilder/provision.sh core
     - COMMAND=/home/core/workspace/cloudbuilder/run.sh
 - name: gcr.io/cloud-builders/docker
-  args: ['load', '--input', 'debian-base-amd64.tar.gz']
+  args: ['load', '--input', 'workspace/cloudbuilder/debian-base-amd64.tar.gz']
 - name: gcr.io/cloud-builders/docker
-  args: ['load', '--input', 'debian-base-arm.tar.gz']
+  args: ['load', '--input', 'workspace/cloudbuilder/debian-base-arm.tar.gz']
 - name: gcr.io/cloud-builders/docker
-  args: ['load', '--input', 'debian-base-arm64.tar.gz']
+  args: ['load', '--input', 'workspace/cloudbuilder/debian-base-arm64.tar.gz']
 - name: gcr.io/cloud-builders/docker
-  args: ['load', '--input', 'debian-base-ppc64le.tar.gz']
+  args: ['load', '--input', 'workspace/cloudbuilder/debian-base-ppc64le.tar.gz']
 - name: gcr.io/cloud-builders/docker
-  args: ['load', '--input', 'debian-base-s390x.tar.gz']
+  args: ['load', '--input', 'workspace/cloudbuilder/debian-base-s390x.tar.gz']
 images:
 - gcr.io/rphillips-dev/debian-base-amd64
 - gcr.io/rphillips-dev/debian-base-arm

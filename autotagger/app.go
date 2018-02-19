@@ -30,7 +30,7 @@ func tagRepo(ctx context.Context, user string, repo string) error {
 	tc := oauth2.NewClient(ctx, ts)
 	client := github.NewClient(tc)
 
-	commits, _, err := client.Repositories.ListCommits(ctx, "rphillips", "kubernetes-base-image-builder", nil)
+	commits, _, err := client.Repositories.ListCommits(ctx, user, repo, nil)
 	if err != nil {
 		return err
 	}
@@ -46,7 +46,7 @@ func tagRepo(ctx context.Context, user string, repo string) error {
 			SHA:  &sha,
 		},
 	}
-	_, _, err = client.Git.CreateRef(ctx, "rphillips", "kubernetes-base-image-builder", ref)
+	_, _, err = client.Git.CreateRef(ctx, user, repo, ref)
 	return err
 }
 
@@ -59,6 +59,8 @@ func handler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 	// setup context
 	ctx := context.Background()
+
+	log.Infof(ctx, "tagging %v", project)
 
 	// get user/project name
 	userRepo := strings.Split(project, "/")

@@ -1,0 +1,4 @@
+cron: 
+- description: "create remote tag to trigger build"
+  schedule: every monday 02:00
+  url: /hook/rphillips/kubernetes-base-image-builder
